@@ -1,41 +1,30 @@
-// import React from 'react'
-// import { View, Text } from 'react-native'
-
-// export default function GoiMon() {
-//     return (
-//         <View>
-//             <Text>GoiMon</Text>
-//         </View>
-//     )
-// }
-
-
-import React, {
-    useEffect, useState
-  
-  } from 'react'
+import React, { useEffect, useState } from 'react'
   import { View, Text, TouchableOpacity, FlatList, Image, StyleSheet, ScrollView, Modal, TextInput } from 'react-native'
   import Ionicons from 'react-native-vector-icons/Ionicons';
   import Fontisto from 'react-native-vector-icons/Fontisto';
   import FontAwesome from 'react-native-vector-icons/FontAwesome';
 //   import { getOrder, getCate } from '../services/Api'
-  import LinearGradient from 'react-native-linear-gradient';
-  import { getImage } from '../utils'
+  import { getProductList, getCate } from '../services/Api.js'
+  import { getImage } from '../ultis'
+  import { useSelector, useDispatch } from "react-redux";
   
   const order = Array(10).fill(null).map((e, i) => ({
     _id: i + 1,
-    img: 'https://soyagarden.com/content/uploads/2020/11/DSC_9683-216x300.jpg',
-    name: `Soya Milk ${i + 1}`,
+    img: 'https://thuonghieuvietnoitieng.com/image/cache/admin/b6e81d47956a4d244614d5ec42bb9e35a74aa7bf/Tocotoco/TRA-SUA-HOKKAIDOU-445x445.jpg',
+    name: `TocoToco Milk Tea ${i + 1}`,
     price: '39,000đ',
     heart: i % 2 === 0
   }))
   
   export default function App({ route, navigation }) {
+    const dispatch = useDispatch();
     const [order, setOrder] = useState()
     const [cate, setCate] = useState();
+
+
     useEffect(() => {
         const getApiOrder = async () => {
-            const result = await getOrder()
+            const result = await getProductList()
             setOrder(result.data.data)
         };
         const getCategoryIds = async () => {
@@ -46,28 +35,32 @@ import React, {
         getApiOrder()
     }, [])
   
-  
-    const onMoveToDetail = (data) => () => {
-      navigation.navigate('Detail', { detail: data });
-    }
-  
+  const onAddToCart = (item) => {
+    dispatch({type: 'ADD CART', data : item })
+  }
+
+  const onMoveToDetail = () => {
+    navigation.navigate('ProductDetail', { detail : data })
+  }
+
     const renderItem = ({ item }) => (
-        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', width: '100%', height: 150, alignSelf: 'center', backgroundColor: 'white', marginBottom: 10, borderBottomColor: 'silver', borderBottomWidth: 0.2, borderRadius: 10 }}
-        onPress={onMoveToDetail(item)}>
-        <View style={{ justifyContent: 'space-evenly', width: '100%', height: '100%', width: 250 }}>
-            <Text style={{ fontWeight: 'bold', fontSize: 18, marginLeft: 15, width: 220, height: 27 }}>{item.product_name}</Text>
-            <Text style={{ fontSize: 16, marginLeft: 15, color: 'grey', width: 215, height: 40 }}>{item.description}</Text>
-            <Text style={{ fontSize: 18, marginLeft: 15, color: 'grey' }}>{item.price}đ</Text>
-        </View>
+      <TouchableOpacity style={{ width: '45%', }} onPress={onMoveToDetail(item)}>
         <Image
-            source={{ uri: item.image }}
-            style={{
-                width: 100,
-                height: 100,
-                borderRadius: 10
-            }}
+          style={styles.imgStyle}
+          // source={{ uri: getImage(item.images?.[0]) }}
+          source={{ uri: item.image }}
         />
-    </TouchableOpacity>
+        <View style={styles.rowPrice}>
+          <Text>{item.price}</Text>
+            {/* <View style = {{height:30,width:30, backgroundColor:'#01DF01',justifyContent:'center',borderRadius:50}} onPress={onAddToCart(item)}>
+                <Ionicons style ={{alignSelf:"center"}} name="ios-add-sharp" size={25} color='white'/>
+            </View> */}
+            <TouchableOpacity style = {{height:30,width:30, backgroundColor:'#01DF01',justifyContent:'center',borderRadius:50}} onPress={onAddToCart(item)}>
+            <Ionicons style ={{alignSelf:"center"}} name="ios-add-sharp" size={25} color='white'/>
+            </TouchableOpacity>
+        </View>
+        <Text>{item.product_name}</Text>
+      </TouchableOpacity>
     );
     return (
       <View>
@@ -95,13 +88,15 @@ import React, {
           <Ionicons name="cart" size={20} color="black"/>
         </View>
       </TouchableOpacity>
-                <FlatList
+      <FlatList
                     data={order}
+                    numColumns={2}
                     showsVerticalScrollIndicator={false}
-                    style={{ height: 800 }}
+                    style={{ height: 555, }}
                     keyExtractor={item => item._id?.toString()}
                     // keyExtractor={(_, i) => i + ""}
                     renderItem={renderItem}
+                    columnWrapperStyle={{ justifyContent: 'space-around', marginBottom: 10, flex: 1 }}
                 />
       </View>
     )
