@@ -22,12 +22,10 @@ function TrangChuStackScreen() {
   return (
     <TrangChuStack.Navigator initialRouteName="Trang Chủ">
       <TrangChuStack.Screen name="Trang Chủ" component={TrangChuScreen} />
-      <TrangChuStack.Screen
-        name="ProductListScreen"
-        component={ProductListScreen}
-      />
+      <TrangChuStack.Screen name="ProductListScreen" component={ProductListScreen}/>
       <TrangChuStack.Screen name="ProductDetail" component={ProductDetail} />
       <TrangChuStack.Screen name="Bag" component={Bag} />
+      <TrangChuStack.Screen name="Login" component={LoginScreen}/>
     </TrangChuStack.Navigator>
   );
 }
@@ -54,7 +52,7 @@ export default function App() {
             }
             //  else if (route.name === 'Bag') {
             //   iconName = focused ? 'cart' : 'cart-outline';
-            // }
+            // }  
             // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
           },

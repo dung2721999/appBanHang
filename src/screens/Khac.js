@@ -14,13 +14,13 @@ import React from 'react'
 import { View, Text, TouchableOpacity, FlatList, Image, StyleSheet, ScrollView, TextInput, Button} from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-export default function Khac() {
+export default function Khac({navigation}) {
     return (
         <View>
             {/* <Text style ={{fontSize:20,fontWeight:'bold',marginTop:20,marginBottom:15,marginLeft:12}}>Khác</Text> */}
             <Text style ={{height:2,backgroundColor:'gray'}}></Text>
         <View style ={{marginLeft:12,marginRight:12}}>
-        <ScrollView style ={{marginBottom:150}}>
+        <ScrollView style ={{marginBottom:20}}>
             <View style ={{flexDirection:'row',marginTop:10,height:70,borderBottomWidth:0.2}}>
             <Ionicons style ={{alignSelf:'center'}} name="ios-person-circle" size={45} color="#A4A4A4"/>
             <View style = {{flex:1,marginLeft:10,justifyContent:'center'}}>
@@ -121,9 +121,9 @@ export default function Khac() {
             <View style ={{height:45,width:45,backgroundColor:'#A4A4A4',borderRadius:50,justifyContent:'center',alignSelf:'center'}}>
             <Ionicons style ={{alignSelf:'center'}} name="ios-log-out-outline" size={25} color="black"/>
             </View>
-            <View style = {{flex:1,marginLeft:10,justifyContent:'center'}}>
+            <TouchableOpacity onPress={() => navigation.navigate('Login')} style = {{flex:1,marginLeft:10,justifyContent:'center'}}>
                 <Text style ={{fontWeight:'bold'}}>Đăng xuất</Text>
-            </View>
+            </TouchableOpacity>
                 <Ionicons style = {{alignSelf:'center'}} name="md-chevron-forward-sharp" size={25} color="#424242"/>
             </View>
             <Text style ={{textAlign:'center',marginTop:30}}>Nếu có bất kỳ vướng mắc hoặc góp ý gì cho Toco Toco, quý khách có thể gọi hotline để được hỗ trợ </Text>

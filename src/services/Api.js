@@ -27,3 +27,4 @@ const order = Array(10).fill(null).map((e, i) => ({
 // goi phuong thuc + phan duoi domain
 export const getProductList = (params) => instance.get('/v2/menu', params)
 export const getCate = (params) => instance.get('/v2/category/web', params)
+export const login = (params) => instance.post('verify_mobile', params)
